@@ -15,7 +15,7 @@ class HostGroups(common.CentreonDecorator, common.CentreonClass):
 
     def __init__(self):
         super(HostGroups, self).__init__()
-        self.hostgroups = dict()
+        self.hostgroups = {}
         self.__clapi_action = 'HG'
 
     def __contains__(self, name):

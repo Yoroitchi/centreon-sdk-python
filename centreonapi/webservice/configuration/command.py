@@ -44,9 +44,17 @@ class Commands(common.CentreonDecorator, common.CentreonClass):
     """
     Centreon Web Command object
     """
+    def __exist__(self, name):
+        if not self.commands:
+            self.list()
+        if  name in self.commands:
+            return True
+        else:
+            return False
+
     def __init__(self):
         super(Commands, self).__init__()
-        self.commands = dict()
+        self.commands = {}
         self.__clapi_action = "CMD"
 
     def __contains__(self, name):

@@ -38,7 +38,7 @@ class Services(CentreonDecorator, CentreonClass):
 
     def __init__(self):
         super(Service, self).__init__()
-        self.services = dict()
+        self.services = {}
 
     def __contains__(self, item):
         pass
@@ -58,9 +58,13 @@ class Services(CentreonDecorator, CentreonClass):
 
     def _refresh_list(self):
         self.services.clear()
-        for service in self.webservice.call_clapi('show', 'SERVICE')['result']:
-            service_obj = Service(service)
-            self.services[service_obj.id] = service_obj
+        state, services = self.webservice.call_clapi(
+                            'show',
+                            self.__clapi_action)
+        if state and len(services['result']) > 0:
+            for s in services['result']:
+                service_obj = Service(s)
+                self.services[service_obj.name] = service_obj
 
     @CentreonDecorator.pre_refresh
     def list(self):

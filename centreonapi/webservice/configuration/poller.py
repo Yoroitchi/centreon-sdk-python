@@ -19,7 +19,7 @@ class Poller(common.CentreonObject):
         self.ssh_port = properties.get('ssh port')
         self.stats_bin = properties.get('stats bin')
         self.status = properties.get('status')
-        self.pollerHost = dict()
+        self.pollerHost = {}
 
     def add(self, *args, **kwargs):
         pass
@@ -56,7 +56,7 @@ class Poller(common.CentreonObject):
             None,
             self.id)
 
-    def relaod(self):
+    def reload(self):
         return self.webservice.call_clapi(
             'pollerreload',
             None,
@@ -87,14 +87,14 @@ class PollerHost(common.CentreonObject):
         self.id = properties.get('id')
         self.address = properties.get('address')
         self.name = properties.get('name')
-        self.poller = properties.get('poller')
+        self.poller = properties.get('poller') # Peut-etre a enlever, on verra
 
 
 class Pollers(common.CentreonDecorator, common.CentreonClass):
 
     def __init__(self):
         super(Pollers, self).__init__()
-        self.pollers = dict()
+        self.pollers = {}
         self.__clapi_action = 'INSTANCE'
 
     def __contains__(self, name):

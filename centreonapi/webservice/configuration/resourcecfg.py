@@ -15,6 +15,7 @@ class ResourceCFG(common.CentreonObject):
         self.name = properties.get('name')
         self.activate = properties.get('activate')
         self.value = properties.get('value')
+        self.comment = properties.get('comment')
 
     def setparam(self, name, value):
         values = [
@@ -33,7 +34,7 @@ class ResourceCFGs(common.CentreonDecorator, common.CentreonClass):
     """
     def __init__(self):
         super(ResourceCFGs, self).__init__()
-        self.resources = dict()
+        self.resources = {}
         self.__clapi_action = "RESOURCECFG"
 
     @staticmethod

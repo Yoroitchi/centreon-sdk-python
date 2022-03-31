@@ -2,7 +2,6 @@
 
 from centreonapi.webservice.configuration.host import Hosts
 from centreonapi.webservice.configuration.host import HostTemplates
-from centreonapi.webservice.configuration.service import Services
 from centreonapi.webservice.configuration.poller import Pollers
 from centreonapi.webservice.configuration.hostgroups import HostGroups
 from centreonapi.webservice.configuration.command import Commands
@@ -21,9 +20,9 @@ class Centreon(object):
         )
 
         self.hosts = Hosts()
-        #self.services = Services()
         self.pollers = Pollers()
         self.hostgroups = HostGroups()
         self.hosttemplates = HostTemplates()
         self.commands = Commands()
         self.resourcecfgs = ResourceCFGs()
+
