@@ -55,7 +55,7 @@ class ServiceGroup(common.CentreonObject):
         data.append("ServiceGoup setservicetemplate  %s : %s :%s" % (name,str(values) ,str(status_add)))
         return data
 
-class ServiceGroups(comon.CentreonDecorator, common.CentreonObject):
+class ServiceGroups(common.CentreonDecorator, common.CentreonObject):
     """
     Centreon Web Service Groups object
     """
@@ -97,7 +97,7 @@ class ServiceGroups(comon.CentreonDecorator, common.CentreonObject):
 
     @common.CentreonDecorator.post_refresh
     def delete(self, name):
-        data = list()
+        data = []
         status_add = self.webservice.call_clapi('del', self.__clapi_action, name)
         data.append("ServiceGroup delete %s :%s" % (name ,str(status_add)))
         return data
