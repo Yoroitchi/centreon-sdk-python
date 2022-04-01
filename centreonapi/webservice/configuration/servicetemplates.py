@@ -29,7 +29,7 @@ class ServiceTemplate(common.CentreonObject):
 
     def get(self, description):
         stpls = []
-        state, stpls = self.webservice.call_clapi(show, self.__clapi_action)
+        state, stpls = self.webservice.call_clapi('show', self.__clapi_action)
         if state and len(stpls['result']) > 0:
             for s in stpls['result']:
                 stpl_obj = s
