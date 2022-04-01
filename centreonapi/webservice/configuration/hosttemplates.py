@@ -95,7 +95,7 @@ class HostTemplate(common.CentreonObject):
         if state:
             if len(hgs['result']) > 0:
                 for h in hgs['result']:
-                    hg_obj = HostGroup(h)
+                    hg_obj = HostGroups(h)
                     self.hostGroups[hg_obj.name] = hg_obj
                 return state, self.hostGroups
             else:
