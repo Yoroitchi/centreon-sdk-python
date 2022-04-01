@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from operator import concat, is_
 import centreonapi.webservice.configuration.common as common
-import bs4
-import json
-
 from centreonapi.webservice import Webservice
 from centreonapi.webservice.configuration.hostgroups import HostGroups
 
@@ -65,12 +61,23 @@ class HostTemplate(common.CentreonObject):
         data.append("notification_period: %s" % str(status_add))
         return data
 
+    def sethosttemplate(self, description, hosttemplate):
+        data = {}
+        values = [
+                description,
+                "|".join(common.build_param(hosttemplate))
+                ]
+        status_add = self.webservice.call_clapi('sethosttemplate', self.__clapi_action, values)
+        data.append("HostTemplate sethosttemplate  %s :%s" % (description ,str(status_add)))
+        return data
+
     def setcontact(self, description, contact):
         data = []
         values = [description, 
                 "|".join(common.build_param(contact))]
         status_add = self.webservice.call_clapi('setcontact', self.__clapi_action, values)
         data.append("HostTemplate setcontact %s: %s" % (description, str(status_add)))
+        return data
 
     def setcontactgroup(self, description, contactgroup):
         data = []
@@ -78,6 +85,23 @@ class HostTemplate(common.CentreonObject):
                 "|".join(common.build_param(contactgroup))]
         status_add = self.webservice.call_clapi('setcontactgroup', self.__clapi_action, values)
         data.append("HostTemplate setcontactgroup %s: %s" % (description, str(status_add)))
+        return data
+
+    def gethostgroup(self, name):
+        data = []
+        hostgroup = {}
+        state, hgs = self.webservice.call_clapi('gethostgroup', self.__clapi_action, name)
+        data.append("HostTemplate gethostgroup %s" % (str(hgs)))
+        if state:
+            if len(hgs['result']) > 0:
+                for h in hgs['result']:
+                    hg_obj = HostGroup(h)
+                    self.hostGroups[hg_obj.name] = hg_obj
+                return state, self.hostGroups
+            else:
+                return state, None
+        else:
+            return state, hgs            
 
     def sethostgroup(self, description, hostgroup=None):
         data = []
@@ -86,19 +110,16 @@ class HostTemplate(common.CentreonObject):
         status_add = self.webservice.call_clapi('sethostgroup', self.__clapi_action, values)
         data.append("HostTemplate sethostgroup %s: %s" % (description, str(status_add)))
 
-    def delhostgroup(self, description, hostgroup=None):
+    def deletehostgroup(self, description, hostgroup=None):
         data = []
         values = [description, 
                 "|".join(common.build_param(hostgroup))]
         status_add = self.webservice.call_clapi('delhostgroup', self.__clapi_action, values)
         data.append("HostTemplate delhostgroup %s: %s" % (description, str(status_add)))
-
-    
-        
+ 
     
 
-
-class HostTemplates(common.CentreonObject):
+class HostTemplates(common.CentreonDecorator, common.CentreonObject):
     def __init__(self):
         super(HostTemplates, self).__init__()
         self.HostTemplates = {}
@@ -124,11 +145,28 @@ class HostTemplates(common.CentreonObject):
             return False
     
     #Ouais j'ai comme un doute sur cette fonction
+    @common.CentreonDecorator.pre_refresh
     def list(self):
-        """
-        List all commands
-
-        :return: dict: All Centreon command
-        """
         return self.HostTemplates
 
+    @common.CentreonDecorator.post_refresh
+    def add(self, name, alias, ip, instance=None, template=None, hg=None):
+        data = []
+        values = [
+                name, 
+                alias, 
+                ip, 
+                str("|".join(common.build_param(template))) if template else template, 
+                str(common.build_param(instance)[0]) if instance else "Central", 
+                str("|".join(common.build_param(hg))) if hg else hg
+                ]
+        status_add = self.webservice.call_clapi('add', self.__clapi_action, values)
+        data.append("HostTemplate add %s: %s" % (name, str(status_add)))
+        return data
+
+    @common.CentreonDecorator.post_refresh
+    def delete(self, description):
+        data = []
+        status_add = self.webservice.call_clapi('del', self.__clapi_action, description)
+        data.append("HostTemplate del %s: %s" % (description, str(status_add)))
+        return data    

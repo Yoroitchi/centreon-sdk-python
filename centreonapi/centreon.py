@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from centreonapi.webservice.configuration.host import Hosts
-from centreonapi.webservice.configuration.host import HostTemplates
+from centreonapi.webservice.configuration.hosttemplates import HostTemplates
 from centreonapi.webservice.configuration.poller import Pollers
 from centreonapi.webservice.configuration.hostgroups import HostGroups
 from centreonapi.webservice.configuration.command import Commands
 from centreonapi.webservice.configuration.resourcecfg import ResourceCFGs
+from centreonapi.webservice.configuration.servicegroups import ServiceGroups
 from centreonapi.webservice import Webservice
 
 
@@ -25,4 +26,4 @@ class Centreon(object):
         self.hosttemplates = HostTemplates()
         self.commands = Commands()
         self.resourcecfgs = ResourceCFGs()
-
+        self.servicegroups = ServiceGroups()

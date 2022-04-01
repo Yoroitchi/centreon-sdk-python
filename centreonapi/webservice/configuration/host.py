@@ -462,14 +462,15 @@ class Hosts(common.CentreonDecorator, common.CentreonClass):
                     value)
 
 
-class HostTemplates(Hosts):
-    def __init__(self):
-        super(HostTemplates, self).__init__()
-        self.__clapi_action = 'HTPL'
-
-
-class HostTemplate(Host):
-
-    def __init__(self, properties):
-        super(HostTemplate, self).__init__(properties)
-        self.__clapi_action = 'HTPL'
+#class HostTemplates(Hosts):
+#    def __init__(self):
+#        super(HostTemplates, self).__init__()
+#        self.__clapi_action = 'HTPL'
+#
+#
+#class HostTemplate(Host):
+#
+#    def __init__(self, properties):
+#        super(HostTemplate, self).__init__(properties)
+#        self.__clapi_action = 'HTPL'
+#
