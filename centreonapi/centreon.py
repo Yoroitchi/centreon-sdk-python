@@ -7,6 +7,7 @@ from centreonapi.webservice.configuration.hostgroups import HostGroups
 from centreonapi.webservice.configuration.command import Commands
 from centreonapi.webservice.configuration.resourcecfg import ResourceCFGs
 from centreonapi.webservice.configuration.servicegroups import ServiceGroups
+from centreonapi.webservice.configuration.servicetemplates import ServiceTemplates
 from centreonapi.webservice import Webservice
 
 

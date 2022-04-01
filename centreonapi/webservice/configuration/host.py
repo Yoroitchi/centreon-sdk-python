@@ -420,14 +420,7 @@ class Hosts(common.CentreonDecorator, common.CentreonClass):
         return self.hosts
 
     @common.CentreonDecorator.post_refresh
-    def add(self,
-            name,
-            alias,
-            ip,
-            instance=None,
-            template=None,
-            hg=None,
-            post_refresh=True):
+    def add(self, name, alias, ip, instance=None, template=None, hg=None, post_refresh=True):
         """
         Add new Host on Centreon platform
         :param name: name for host
@@ -448,18 +441,12 @@ class Hosts(common.CentreonDecorator, common.CentreonClass):
             str(common.build_param(instance, Poller)[0]) if instance else "Central",
             str("|".join(common.build_param(hg, HostGroup))) if hg else hg
         ]
-        return self.webservice.call_clapi(
-                    'add',
-                    self.__clapi_action,
-                    values)
+        return self.webservice.call_clapi('add', self.__clapi_action, values)
 
     @common.CentreonDecorator.post_refresh
     def delete(self, host, post_refresh=True):
         value = str(common.build_param(host, Host)[0])
-        return self.webservice.call_clapi(
-                    'del',
-                    self.__clapi_action,
-                    value)
+        return self.webservice.call_clapi('del', self.__clapi_action, value)
 
 
 #class HostTemplates(Hosts):

@@ -144,7 +144,6 @@ class HostTemplates(common.CentreonDecorator, common.CentreonObject):
         else:
             return False
     
-    #Ouais j'ai comme un doute sur cette fonction
     @common.CentreonDecorator.pre_refresh
     def list(self):
         return self.HostTemplates
@@ -169,4 +168,4 @@ class HostTemplates(common.CentreonDecorator, common.CentreonObject):
         data = []
         status_add = self.webservice.call_clapi('del', self.__clapi_action, description)
         data.append("HostTemplate del %s: %s" % (description, str(status_add)))
-        return data    
+        return data
