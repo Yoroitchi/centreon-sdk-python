@@ -31,7 +31,7 @@ class ServiceTemplate(common.CentreonObject):
         stpls = []
         state, stpls = self.webservice.call_clapi(show, self.__clapi_action)
         if state and len(stpls['result']) > 0:
-            for s in spls['result']:
+            for s in stpls['result']:
                 stpl_obj = s
                 stpls[stpl_obj.get('description')] = stpl_obj
         try:
@@ -86,14 +86,14 @@ class ServiceTemplate(common.CentreonObject):
     def setcontactgroup(self, name, contactsgroup):
         data = []
         values = [name, "|".join(common.build_param(contactsgroup))]
-        status_add = webservice.call_clapi('setcontactgroup', self.__clapi_action, values)
+        status_add =self.webservice.call_clapi('setcontactgroup', self.__clapi_action, values)
         data.append("ServiceTemplate setcontactgroup  %s: %s" % (name ,str(status_add)))
         return data
 
     def settrap(self, name, trap):
         data = []
         values = [name, "|".join(common.build_param(trap))]
-        status_add = webservice.call_clapi('settrap', self.__clapi_action, values)
+        status_add = self.webservice.call_clapi('settrap', self.__clapi_action, values)
         data.append("ServiceTemplate trap  %s: %s" % (name ,str(status_add)))
         return data
 
